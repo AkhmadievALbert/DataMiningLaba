@@ -1,0 +1,2 @@
+# DataMiningLaba
+print('Hello World!')
