@@ -9,8 +9,8 @@ group_id = "-35488145"
 
 # database_configs
 database = "postgres"
-user = "postgres"
-password = "postgres"
+user = "admin"
+password = "admin"
 host = "alba.c1xvb10kjfue.us-east-1.rds.amazonaws.com"
 port = "5432"
 
