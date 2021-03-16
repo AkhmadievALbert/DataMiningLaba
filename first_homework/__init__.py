@@ -10,8 +10,8 @@ group_id = "-35488145"
 # database_configs
 database = "postgres"
 user = "postgres"
-password = "admin"
-host = "alba.c1xvb10kjfue.us-east-1.rds.amazonaws.com"
+password = "postgres"
+host = "database-1.c1xvb10kjfue.us-east-1.rds.amazonaws.com"
 port = "5432"
 
 def parse(group_id):
