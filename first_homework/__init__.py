@@ -11,7 +11,7 @@ group_id = "-35488145"
 database = "postgres"
 user = "alba"
 password = "Albert2001"
-host = "localhost"
+host = "alba.c1xvb10kjfue.us-east-1.rds.amazonaws.com"
 port = "5432"
 
 def parse(group_id):
