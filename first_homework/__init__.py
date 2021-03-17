@@ -1,3 +1,9 @@
+import datetime
+
+from airflow.models import DAG
+from airflow.operators.python_operator import PythonOperator
+import re
+
 import vk_api
 import re
 import psycopg2
@@ -5,7 +11,6 @@ from nltk.corpus import stopwords
 
 # vk_configs
 token = "1c61300a1c61300a1c61300a341c17ab9211c611c61300a7c56eca7d3df2758b4efc6b3"
-group_id = "-35488145"
 
 # database_configs
 database = "postgres"
@@ -14,8 +19,17 @@ password = "postgres"
 host = "database-1.c1xvb10kjfue.us-east-1.rds.amazonaws.com"
 port = "5432"
 
-def parse(group_id):
+args = {
+    'owner': 'airflow',
+    'start_date': datetime.datetime(2021, 3, 15),
+    'retries': 1,
+    'retry_delay': datetime.timedelta(minutes=1),
+    'depends_on_past': False,
+}
+
+def parse():
     api = getApi(token=token)
+    group_id = "-35488145"
     first_100_posts = get_100_posts(group_id=group_id, api=api, offset=0)
     second_100_posts = get_100_posts(group_id=group_id, api=api, offset=100)
     posts = first_100_posts + second_100_posts
@@ -76,4 +90,12 @@ def saveToDataBase(word_statistic):
     conn.close()
 
 if __name__ == '__main__':
-    parse(group_id)
+    parse()
+
+
+with DAG(dag_id='alba_dag', default_args=args, schedule_interval=None) as dag:
+    parse_vk_wall = PythonOperator(
+        task_id='alba_task',
+        python_callable=parse,
+        dag=dag
+    )
